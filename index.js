@@ -10,19 +10,41 @@ const readFilePro = (file) => {
   });
 };
 
-fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
-  console.log(`Breed: ${data}`);
-
-  superagent
-    .get(`https://dog.ceo/api/breed/${data}/images/random`)
-    .then((res) => {
-      console.log(res.body.message);
-
-      fs.writeFile('dog-img.txt', res.body.message, (err) => {
-        console.log('Random Dog Image Saved to File');
-      });
-    })
-    .catch((err) => {
-      console.log(err.message);
+const writeFilePro = (file, data) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, data, (err) => {
+      if (err) reject('Something went wrong with writing file');
+      resolve('success');
     });
-});
+  });
+};
+readFilePro(`${__dirname}/dog.txt`)
+  .then((data) => {
+    return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+  })
+  .then((res) => {
+    return writeFilePro('dog-img.txt', res.body.message);
+  })
+  .then(() => {
+    console.log('Random Dog Image Saved to File');
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+// fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
+//   console.log(`Breed: ${data}`);
+
+//   superagent
+//     .get(`https://dog.ceo/api/breed/${data}/images/random`)
+//     .then((res) => {
+//       console.log(res.body.message);
+
+//       fs.writeFile('dog-img.txt', res.body.message, (err) => {
+//         console.log('Random Dog Image Saved to File');
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// });
