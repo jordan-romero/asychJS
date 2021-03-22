@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "nodemon": "^2.0.7",
+    "superagent": "^6.1.0"
+  },
+  "name": "starter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jordles113/asychJS.git",
+  "author": "jordles113 <jordan.t.romero@gmail.com>",
+  "license": "MIT"
+}
